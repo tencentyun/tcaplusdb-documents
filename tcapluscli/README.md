@@ -70,6 +70,7 @@ TcaplusDB提供了丰富的功能接口来满足不同用户使用TcaplusDB的�
 * __Linux__: /root/.tcaplusdb
 * __MacOS__: : /Users/[username]/.tcaplusdb
 * __Windows__: C:/Users/[username]/.tcaplusdb
+
 |文件名|文件说明|
 |---|---|
 |credentials|腾讯云访问账号密钥信息，SECRET_KEY, SECRET_ID|
