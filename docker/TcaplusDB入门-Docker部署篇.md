@@ -76,7 +76,7 @@ docker run -itd --net=host --shm-size=3G --privileged    --name test tcaplusrun_
   * __host模式__: docker容器网络与宿主机网络一致，确保当前部署docker的机器上无其它相关部署组件，如:mysql, es, nginx等，会造成相关端口冲突
   * __bridge模式__: docker容器的默认网络连接模式，如果业务是本机部署docker并在本机调试，不涉及跨机访问的话可以用此模式,　如下启动容器命令所示：
   ```
-  docker run -itd -p 5678:80 -p 9999:9999 -p 13755-13765:13755-13765 --shm-size=3G --privileged --name test tcaplusrun_20201118_es_pb
+  docker run -itd -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --shm-size=3G --privileged --name test tcaplusrun_20201118_es_pb
   ```
 
 创建容器后，可查看是否创建OK, 执行如下命令:
