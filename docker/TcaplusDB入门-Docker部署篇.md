@@ -7,6 +7,11 @@ TcaplusDB本地Docker版是为用户提供的一个满足本地开发调试的�
 |TcaplusDB Docker镜像|[Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplus_community_image.tar.gz)|
 |TcaplusDB CLI工具|[Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/tcapluscli/tcapluscli.tgz)|
 
+# 部署前置
+* __部署docker机器尽量用比较干净机器，即未部署mysql,nginx,elasticsearch之类的软件，TcaplusDB镜像内会启动mysql相关进程，如果机器部署有相关组件，会造成TcaplusDB进程无法启动，端口冲突, 涉及冲突端口: 3306,80, 9999,31001, 13755-13777__
+* __部署机器磁盘大小建议100G，可用磁盘空间大于50GB__
+
+
 # 部署
 ##  准备机器环境
 如果是在腾讯云上测试，则需要准备申请一台CVM实例，规格在: 4C8G, 操作系统用户自己选定，可以是Centos7系统或Deiban 8系列以上的版本。CVM实例主要用于跑docker镜像和调试程序。CVM需要有一个外网IP用于TcaplusDB操作控制台访问。
@@ -92,7 +97,7 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
 #进入容器
 docker exec -it ［容器id] /bin/bash
 
-#等待2－3min, 可通过ps命令查看进程是否ok, ps -ef | grep tcaplusdb
+#等待2－3min, 可通过ps命令查看进程是否ok, ps -ef | grep tcaplus
 
 tcaplus_docker 172.18.0.2 root-> ps -ef | grep tcaplus | grep "/data/tcaplus"
 root         1     0  0 Oct28 ?        00:00:00 sh /data/tcaplus/setup.sh
