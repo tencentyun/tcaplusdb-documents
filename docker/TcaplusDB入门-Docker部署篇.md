@@ -9,8 +9,10 @@ TcaplusDB本地Docker版是为用户提供的一个满足本地开发调试的�
 
 # 部署前置
 * __部署docker机器尽量用比较干净机器，即未部署mysql,nginx,elasticsearch之类的软件，TcaplusDB镜像内会启动mysql相关进程，如果机器部署有相关组件，会造成TcaplusDB进程无法启动，端口冲突, 涉及冲突端口: 3306,80, 9999,31001, 13755-13777__
+
 * __部署机器磁盘大小建议100G，可用磁盘空间大于50GB__
 
+* __部署机器操作系统建议Centos7,64-bit系统__
 
 # 部署
 ##  准备机器环境
@@ -131,6 +133,7 @@ docker容器暴露端口主要关注两类：
 * 另一个是后端服务端口：`9999和<13755-13780>`，用于tcaplusdb　sdk连接后端服务使用。需要确保本地开发测试机到docker部署机器的策略互通情况。13755-13780主要是tcaplusdb的proxy端口，和表格组数量有关，默认一个表格组会创建两个端口，从13755开始递增。
 
 ## TcaplusDB工具准备
+### 部署环境
 为方便用户快速上手本地环境，TcaplusDB提供了一个集成封装好的工具，用于快速在本地Docker环境创建表格组、表。工具支持不同的OS平台，如`MacOS、Debian8.2、CentOS7、CentOS8、Windows10`。这里以CentOS平台举例，　工具下载地址: TcaplusDB本地工具。解压包后，找到对应平台的二进制文件即可，如tcapluscli-centos7-i386。包中也有详细的帮助说明文档以供用户参考使用。可将工具拷贝到对应的开发测试机或云主机目录，并重命名为tcapluscli方便执行。
 
 ```
@@ -144,11 +147,11 @@ tcapluscli-centos7-i386        tcapluscli-centos8-i386          tcapluscli-macos
 
 [root@VM-32-2-centos ~]#  chmod +x tcapluscli
 ```
-
+###　部署要求
 工具在使用之前，需要提前设置下个访问密钥相关(`~/.tcaplusdb/credentials`)，由于本地Docker版不涉及云环境　（__云环境需要设置账户真实密钥信息__)，所以SECRET_KEY和SECRET_ID设置可随意设置：
 ```
-#进入用户根目录，创建一个.tcaplusdb目录,如用户根目录是/root
-mkdir /root/.tcaplusdb
+#进入用户根目录，创建一个.tcaplusdb目录,如用户根目录是/root, 如果是非root用户操作，则在对应用户home目录下创建，如/home/testuser/
+mkdir /root/.tcaplusdb    #非root用户, mkdir /home/testuser/.tcaplusdb
 #进入目录
 cd ~/.tcaplusdb
 #创建credentials文件
