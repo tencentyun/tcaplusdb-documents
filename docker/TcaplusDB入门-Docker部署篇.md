@@ -147,7 +147,7 @@ tcapluscli-centos7-i386        tcapluscli-centos8-i386          tcapluscli-macos
 
 [root@VM-32-2-centos ~]#  chmod +x tcapluscli
 ```
-###　部署要求
+###部署要求
 工具在使用之前，需要提前设置下个访问密钥相关(`~/.tcaplusdb/credentials`)，由于本地Docker版不涉及云环境　（__云环境需要设置账户真实密钥信息__)，所以SECRET_KEY和SECRET_ID设置可随意设置：
 ```
 #进入用户根目录，创建一个.tcaplusdb目录,如用户根目录是/root, 如果是非root用户操作，则在对应用户home目录下创建，如/home/testuser/
