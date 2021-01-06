@@ -122,7 +122,7 @@ libprotoc 3.5.0
 
 ### 准备 PROTO 表示例文件
 
-这里以示例中的 game_players.proto 举例，表名: `tb_online`, 表类型: `GENERIC`。文件具体内容如下：
+这里以示例中的 table_test.proto 举例，表名: `tb_online`, 表类型: `GENERIC`。文件具体内容如下：
 
 ```
 syntax = "proto3";
