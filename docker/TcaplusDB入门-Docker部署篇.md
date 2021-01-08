@@ -4,7 +4,7 @@ TcaplusDB本地Docker版是为用户提供的一个满足本地开发调试的�
 # 依赖
 |依赖组件|下载地址|
 |---|---|
-|TcaplusDB Docker镜像|[Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplus_community_image.tar.gz)|
+|TcaplusDB Docker镜像|[Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplusdb-local-3.51.1.tar.gz)|
 |TcaplusDB CLI工具|[Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/tcapluscli/tcapluscli.tgz)|
 
 # 部署前置
@@ -56,15 +56,15 @@ apt-get install -y mdadm
 ```
 ## TcaplusDB镜像准备
 ### 导入TcaplusDB本地镜像
-导入已经制作的TcaplusDB本地Docker镜像，镜像下载地址：[tcaplus_community_image.tar.gz](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplus_community_image.tar.gz)或从本地导入，以镜像文件名tcaplusdb_community_image.tar.gz举例，　导入方式如下:
+导入已经制作的TcaplusDB本地Docker镜像，镜像下载地址：[tcaplusdb-local-3.51.1.tar.gz](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplusdb-local-3.51.1.tar.gz)或从本地导入，以镜像文件名tcaplusdb_community_image.tar.gz举例，　导入方式如下:
 ```
 #镜像导入
-[root@VM-32-2-centos ~]# docker load　< tcaplusdb_community_image.tar.gz
+[root@VM-32-2-centos ~]# docker load　< tcapludb-local-3.51.1.tar.gz
 
 #镜像查看
 [root@VM-32-2-centos ~]# docker images
 REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE
-tcaplusrun_20201118_es_pb   latest              e40b1d2157a9        3 days ago          8.15GB
+tcaplusdb-local             3.51.1              e40b1d2157a9        3 days ago          8.15GB
 ```
 
 ### 创建镜像容器
@@ -75,7 +75,7 @@ tcaplusrun_20201118_es_pb   latest              e40b1d2157a9        3 days ago  
 docker run -itd --net=host --shm-size=3G --privileged --name [容器名] [镜像REPOSITORY名]
 
 #示例：带net网络参数，指定host模式，创建成功后容器内的环境与宿主机网络环境保持一致，共用网卡, 解决跨机访问docker容器问题
-docker run -itd --net=host --shm-size=3G --privileged    --name test tcaplusrun_20201118_es_pb
+docker run -itd --net=host --shm-size=3G --privileged    --name test tcaplusdb-local
 ```
 
 注意：
@@ -83,14 +83,14 @@ docker run -itd --net=host --shm-size=3G --privileged    --name test tcaplusrun_
   * __host模式__: docker容器网络与宿主机网络一致，确保当前部署docker的机器上无其它相关部署组件，如:mysql, es, nginx等，会造成相关端口冲突
   * __bridge模式__: docker容器的默认网络连接模式，如果业务是本机部署docker并在本机调试，不涉及跨机访问的话可以用此模式,　如下启动容器命令所示：
   ```
-  docker run -itd -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --shm-size=3G --privileged --name test tcaplusrun_20201118_es_pb
+  docker run -itd -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --shm-size=3G --privileged --name test tcaplusdb-local
   ```
 
 创建容器后，可查看是否创建OK, 执行如下命令:
 ```
 [root@VM-32-2-centos ~]# docker ps
 CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS               NAMES
-4fa0a671cf9b        tcaplusrun_20201112_es_pb   "sh /data/tcaplus/se…"   9 minutes ago       Up 9 minutes                            test
+4fa0a671cf9b        tcaplusdb-local   "sh /data/tcaplus/se…"   9 minutes ago       Up 9 minutes                            test
 ```
 
 ### 启动TcaplusDB进程
