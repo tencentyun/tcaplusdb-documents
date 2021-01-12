@@ -2,8 +2,11 @@
 Table of Contents
 =================
 
+   * [Table of Contents](#table-of-contents)
    * [PROTOBUF说明](#protobuf\xE8\xAF\xB4\xE6\x98\x8E)
    * [入门](#\xE5\x85\xA5\xE9\x97\xA8)
+   * [约束限制](#\xE7\xBA\xA6\xE6\x9D\x9F\xE9\x99\x90\xE5\x88\xB6)
+   * [环境准备](#\xE7\x8E\xAF\xE5\xA2\x83\xE5\x87\x86\xE5\xA4\x87)
       * [Docker环境准备](#docker\xE7\x8E\xAF\xE5\xA2\x83\xE5\x87\x86\xE5\xA4\x87)
       * [Go环境准备](#go\xE7\x8E\xAF\xE5\xA2\x83\xE5\x87\x86\xE5\xA4\x87)
       * [protoc工具准备](#protoc\xE5\xB7\xA5\xE5\x85\xB7\xE5\x87\x86\xE5\xA4\x87)
@@ -29,6 +32,7 @@ Table of Contents
    * [接口示例](#\xE6\x8E\xA5\xE5\x8F\xA3\xE7\xA4\xBA\xE4\xBE\x8B)
       * [接口源代码](#\xE6\x8E\xA5\xE5\x8F\xA3\xE6\xBA\x90\xE4\xBB\xA3\xE7\xA0\x81)
       * [调用模式](#\xE8\xB0\x83\xE7\x94\xA8\xE6\xA8\xA1\xE5\xBC\x8F)
+      * [接口调用步骤](#\xE6\x8E\xA5\xE5\x8F\xA3\xE8\xB0\x83\xE7\x94\xA8\xE6\xAD\xA5\xE9\xAA\xA4)
       * [接口源码](#\xE6\x8E\xA5\xE5\x8F\xA3\xE6\xBA\x90\xE7\xA0\x81)
       * [客户端接口](#\xE5\xAE\xA2\xE6\x88\xB7\xE7\xAB\xAF\xE6\x8E\xA5\xE5\x8F\xA3)
          * [初始化接口](#\xE5\x88\x9D\xE5\xA7\x8B\xE5\x8C\x96\xE6\x8E\xA5\xE5\x8F\xA3)
@@ -52,11 +56,28 @@ Table of Contents
             * [遍历示例](#\xE9\x81\x8D\xE5\x8E\x86\xE7\xA4\xBA\xE4\xBE\x8B)
    * [错误码](#\xE9\x94\x99\xE8\xAF\xAF\xE7\xA0\x81)
 
-
 # PROTOBUF说明
 PROTO表是基于PROTOBUF协议设计的TcaplusDB表，PROTOBUF协议是Google开源的通用RPC通信协议，用于TcaplusDB存储数据的序列化、反序列化等操作，具体关于PROTO表的定义说明可参考章节：[PROTO表定义](https://cloud.tencent.com/document/product/596/44406)。PROTO表定义以protobuf格式来定义表结构，支持丰富的数据类型, 可参考protobuf支持的类型。
 #  入门
 快速入手PROTOBUF协议表的开发涉及几个步骤，下面介绍如何基于TcalusDB本地Docker版环境，快速上手基于Golang进行PROTO表的增删查改操作。所有操作均在申请的开发测试机或云主机进行。
+# 约束限制
+|编号|资源|限制|
+|---|---|---|
+|1|单表格组允许表格数|256|
+|2|单表大小|2.56PB|
+|3|Generic表主键字段数|8|
+|4|Generic表字段数|256|
+|5|List表主键字段数|7|
+|6|List表字段数|255|
+|7|List表中元素个数,单key对应链表元素个数|10000|
+|8|表名长度|32Bytes|
+|9|字段名长度|32Bytes|
+|10|主键字段值大小|1KB|
+|11|非主键字段值大小|10MB|
+|12|单记录大小|10MB|
+|13|批量查询返回记录数|1024|
+
+# 环境准备
 ## Docker环境准备
 在开始示例代码演示之前，需要提前准备好TcaplusDB本地Docker环境及tcapluscli工具，具体请参考资料：[TcaplusDB入门-Docker部署篇.md](https://github.com/tencentyun/tcaplusdb-documents/blob/main/docker/TcaplusDB%E5%85%A5%E9%97%A8-Docker%E9%83%A8%E7%BD%B2%E7%AF%87.md)。
 Docker部署好后，对于命令行工具需要授权所有IP访问Docker环境，授权方式:
