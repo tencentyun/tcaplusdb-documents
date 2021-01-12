@@ -26,13 +26,9 @@ TDR(Tencent Data Representation), 腾讯自研的跨平台多语言数据表示�
 
 # 入门
 快速入手TDR协议表的开发涉及几个步骤，下面介绍如何基于TcalusDB本地Docker版环境，快速上手基于C++进行TDR表的增删查改操作。所有操作均在申请的开发测试机或云主机进行。
-## Docker环境准备
-在开始示例代码演示之前，需要提前准备好TcaplusDB本地Docker环境及tcapluscli工具，具体请参考资料：[TcaplusDB入门-Docker部署篇.md](https://github.com/tencentyun/tcaplusdb-documents/blob/main/docker/TcaplusDB%E5%85%A5%E9%97%A8-Docker%E9%83%A8%E7%BD%B2%E7%AF%87.md)。
-Docker部署好后，对于命令行工具需要授权所有IP访问Docker环境，授权方式:
-```
-./tcapluscli privilege --endpoint-url=http://localhost --allow-all-ip
 
 # 约束限制
+
 |编号|资源|限制|
 |---|---|---|
 |1|单表格组允许表格数|256|
@@ -49,6 +45,12 @@ Docker部署好后，对于命令行工具需要授权所有IP访问Docker环境
 |12|单记录大小|10MB|
 |13|批量查询返回记录数|1024|
 
+# 环境准备
+## Docker环境准备
+在开始示例代码演示之前，需要提前准备好TcaplusDB本地Docker环境及tcapluscli工具，具体请参考资料：[TcaplusDB入门-Docker部署篇.md](https://github.com/tencentyun/tcaplusdb-documents/blob/main/docker/TcaplusDB%E5%85%A5%E9%97%A8-Docker%E9%83%A8%E7%BD%B2%E7%AF%87.md)。
+Docker部署好后，对于命令行工具需要授权所有IP访问Docker环境，授权方式:
+```
+./tcapluscli privilege --endpoint-url=http://localhost --allow-all-ip
 ```
 
 ## TcaplusDB表准备
