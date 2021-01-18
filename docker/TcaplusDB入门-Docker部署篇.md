@@ -8,7 +8,7 @@ TcaplusDB本地Docker版是为用户提供的一个满足本地开发调试的�
 |TcaplusDB CLI工具|[Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/tcapluscli/tcapluscli.tgz)|
 
 # 部署前置
-* __部署docker机器尽量用比较干净机器，即未部署mysql,nginx,elasticsearch之类的软件，TcaplusDB镜像内会启动mysql相关进程，如果机器部署有相关组件，会造成TcaplusDB进程无法启动，端口冲突, 涉及冲突端口: 3306,80, 9999,31001, 13755-13777__
+* __部署docker机器尽量用比较干净机器，即未部署mysql,nginx,elasticsearch之类的软件，TcaplusDB镜像内会启动mysql相关进程，如果机器部署有相关组件，会造成TcaplusDB进程无法启动，端口冲突, 涉及冲突端口: 3306,80, 9999,31001, 9200,9300,13755-13777__
 
 * __部署机器磁盘大小建议100G，可用磁盘空间大于50GB__
 
