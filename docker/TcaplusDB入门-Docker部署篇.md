@@ -72,10 +72,10 @@ tcaplusdb-local             3.51.1              e40b1d2157a9        3 days ago  
 
 ```
 #命令格式
-docker run -itd --net=host --shm-size=3G --privileged --name [容器名] [镜像REPOSITORY名]
+docker run -itd --net=host --shm-size=3G --privileged --name [容器名] [镜像REPOSITORY名]:[TAG]
 
 #示例：带net网络参数，指定host模式，创建成功后容器内的环境与宿主机网络环境保持一致，共用网卡, 解决跨机访问docker容器问题
-docker run -itd --net=host --shm-size=3G --privileged    --name test tcaplusdb-local
+docker run -itd --net=host --shm-size=3G --privileged    --name test tcaplusdb-local:3.51.1
 ```
 
 注意：
