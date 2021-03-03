@@ -154,10 +154,19 @@ tcaplusdb-local   3.51.1    d06cce065bc1   2 hours ago   6.95GB
 
 ## 步骤 3，创建容器
 
-创建容器命令：
+创建容器支持两种：
+
+- 一种是默认的容器创建，命令如下：
 
 ```
-docker run -itd --privileged -p 8080:80 -p 13755-13765:13755-13765 -p 9999:9999 --shm-size=3G --name test tcaplusdb-local:3.51.1
+docker run -itd --privileged  -p 8080:80 -p 13755-13765:13755-13765 -p 9999:9999 --shm-size=3G --name test tcaplusdb-local:3.51.1
+```
+
+- 另一种是指定 IP，用于一些本机无法访问 docker 容器内 IP 的场景，如在 win10 　 cmd 下 telnet 172.17.0.2 9999 无法通时可用此方式创建容器
+
+```
+#TCAPLUS_CONTAINER_PROXY_PUBLIC_IP是指定proxy的ip, 获取方式：进CentOS7 distro环境，用ifconfig 获取eth0的ip,
+docker run -itd --privileged  -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2" -p 8080:80 -p 13755-13765:13755-13765 -p 9999:9999 --shm-size=3G --name test tcaplusdb-local:3.51.1
 ```
 
 上述容器创建命令还将容器内的端口暴露到宿主机：
@@ -213,7 +222,7 @@ root      2253  2140  0 21:33 pts/1    00:00:00 grep tcaplus
 
 ## 步骤 4，查看创建是否 ok
 
-通过浏览器访问 localhost:8080 即可，账号/密码都为`tcaplus`。如果访问正常，即表示容器创建 ok, 同时进"运维平台"=>"集群状态", 查看集群进程状态是否 ok,看是否有停止状态的进程。
+通过浏览器访问 localhost:8080 即可，账号为`tcaplus`, 密码为`OP0ZrrnR0#aY92miH`, 可登录平台后在账号管理处修改密码。如果访问正常，即表示容器创建 ok, 同时进"运维平台"=>"集群状态", 查看集群进程状态是否 ok,看是否有停止状态的进程。
 
 # 常见报错
 
