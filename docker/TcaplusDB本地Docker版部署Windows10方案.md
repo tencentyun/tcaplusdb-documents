@@ -1,4 +1,4 @@
-#　 TcaplusDB 本地 Docker 版部署 Windows10 方案
+# TcaplusDB 本地 Docker 版部署 Windows10 方案
 
 # 背景
 
