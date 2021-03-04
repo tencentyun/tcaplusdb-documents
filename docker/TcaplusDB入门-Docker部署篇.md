@@ -186,7 +186,7 @@ TcaplusDB 本地镜像提供了功能齐全的运维平台供用户通过 Web �
 
 ```
 用户名: tcaplus
-密码: OP0ZrrnR0#aY92miH
+密码: xxx (用户在创建容器时通过参数TCAPLUS_CONTAINER_OMS_PASSWORD指定)
 ```
 
 ### 后端服务暴露端口说明
