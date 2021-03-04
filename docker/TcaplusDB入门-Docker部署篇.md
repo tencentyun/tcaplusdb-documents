@@ -103,11 +103,11 @@ tcaplusdb-local             3.51.1              e40b1d2157a9        3 days ago  
 创建命令如下:
 
 ```
-#格式
-docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="cvm外网ip" -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --name [容器名] [镜像REPOSITORY名]:[TAG]
+#参数TCAPLUS_CONTAINER_PROXY_PUBLIC_IP指定暴露的proxy ip, 参数TCAPLUS_CONTAINER_OMS_PASSWORD指定web平台登录密码
+docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="cvm外网ip" -e TCAPLUS_CONTAINER_OMS_PASSWORD="***" -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --name [容器名] [镜像REPOSITORY名]:[TAG]
 
 #示例,CVM外网IP为：106.54.12.135，客户自行替换成自己的IP
-docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="106.54.12.135"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="106.54.12.135"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
 ```
 
 ### 场景 2－容器创建
@@ -115,8 +115,8 @@ docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP=
 场景 2 和场景 1 类似，把相关外网 IP 换成内网开发机 IP 即可, ip 获取方式可通过 ifconfig 命令查看 eth1/eth0 网卡或客户自己局域网所在网卡的 ip 为主。
 
 ```
-#内网ip，网卡eth1或eth0所在ip, 如172.17.32.2
-docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="172.17.32.2"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+#内网ip，网卡eth1或eth0所在ip, 如172.17.32.2，　参数TCAPLUS_CONTAINER_OMS_PASSWORD指定web平台登录密码
+docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="172.17.32.2"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
 ```
 
 ### 场景 3－容器创建
@@ -125,11 +125,11 @@ docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP=
 容器创建方式：
 
 ```
-#不指定proxy ip,
-docker run -itd --shm-size=3G --privileged   -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+#不指定proxy ip，　参数TCAPLUS_CONTAINER_OMS_PASSWORD指定web平台登录密码
+docker run -itd --shm-size=3G --privileged   -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
 
 #指定proxy ip, 用于一些本机无法telnet容器IP端口的场景，如telnet 172.17.0.2 9999无法通，指定IP获取方式：win10下进wsl环境，CentOS7 distro，执行ifconfig获取的eth0 ip
-docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
 ```
 
 ### 场景 4-host 模式创建容器
@@ -142,7 +142,8 @@ docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP=
 host 模式容器创建命令：
 
 ```
-docker run -itd --net=host --shm-size=3G --privileged --name test tcaplusdb-local:3.51.1
+#参数TCAPLUS_CONTAINER_OMS_PASSWORD指定web平台登录密码
+docker run -itd --net=host -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  --shm-size=3G --privileged --name test tcaplusdb-local:3.51.1
 ```
 
 创建容器后，可查看是否创建 OK, 执行如下命令:
