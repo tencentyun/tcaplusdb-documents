@@ -84,7 +84,6 @@ TcaplusDB 除了腾讯云环境,也支持本地版环境.本地环境主要用�
 | 资源名称           | 版本   | 资源说明           | 下载地址                                                                                                                                    |
 | ------------------ | ------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | TcaplusPbApi3.46.0 | 3.46.0 | PB SDK             | [下载](https://tcaplusdb-sdk-1301716906.cos.ap-shanghai.myqcloud.com/release/3-46/TcaplusPbApi3.46.0.199033.x86_64_release_20201210.tar.gz) |
-| TSF4G              | 2.7.37 | SDK 编译依赖系统库 | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release.tar.gz)                  |
 | protobuf           | 3.5.1  | protobuf 库,protoc | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/protobuf-cpp-3.5.1.tar.gz)                                          |
 
 ## 5.2 系统依赖库安装
@@ -145,14 +144,6 @@ libprotoc 3.5.0
 ## 5.4 SDK 依赖安装
 
 参考 5.1 下载 TcaplusDB C++ PB SDK 并解压。
-
-参考 5.1 下载安装 TSF4G 系统依赖 SDK。
-
-```
-tar zxvf TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release.tar.gz
-mkdir /usr/local/tsf4g
-mv ./TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release/release/x86_64/* /usr/local/tsf4g/
-```
 
 # 6. TcaplusDB 资源准备
 
@@ -291,7 +282,7 @@ static const char * SIGNATURE = "Tcaplus@2020";
 /root/TcaplusPbApi3.46.0.199033.x86_64_release_20201210/release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable/SingleOperation/add
 ```
 
-- **envcfg.env**: 配置 PROTOBUF_HOME 和 TCAPLUS_HOME 环境变量
+- **envcfg.env**: 配置 PROTOBUF_HOME 、TCAPLUS_HOME 、TSF4G_HOME 环境变量
 
 ```
 export PROTOBUF_HOME=/usr/local/protobuf;
