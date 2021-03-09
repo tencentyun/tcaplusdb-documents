@@ -3,6 +3,7 @@
 # Table of Contents
 
 - [TcaplusDB 新特性说明手册](#tcaplusdb-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE8\xAF\xB4\xE6\x98\x8E\xE6\x89\x8B\xE5\x86\x8C)
+- [Table of Contents](#table-of-contents)
 - [1. 介绍](#1-\xE4\xBB\x8B\xE7\xBB\x8D)
 - [2.前置工作](#2\xE5\x89\x8D\xE7\xBD\xAE\xE5\xB7\xA5\xE4\xBD\x9C)
   - [2.1 资源下载](#21-\xE8\xB5\x84\xE6\xBA\x90\xE4\xB8\x8B\xE8\xBD\xBD)
@@ -24,11 +25,10 @@
   - [4.5 新特性约束](#45-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE7\xBA\xA6\xE6\x9D\x9F)
 - [5. 示例代码](#5-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81)
   - [5.1 示例代码说明](#51-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81\xE8\xAF\xB4\xE6\x98\x8E)
+    - [5.1.1 Generic 表示例](#511-generic-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B)
+    - [5.1.2 List 表示例](#512-list-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B)
   - [5.2 示例代码使用](#52-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81\xE4\xBD\xBF\xE7\x94\xA8)
     - [5.2.1 代码编译](#521-\xE4\xBB\xA3\xE7\xA0\x81\xE7\xBC\x96\xE8\xAF\x91)
-  - [5.3 示例代码说明](#53-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81\xE8\xAF\xB4\xE6\x98\x8E)
-    - [5.3.1 Generic 表示例](#531-generic-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B)
-    - [5.3.2 List 表示例](#532-list-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B)
 - [6. API 附录](#6-api-\xE9\x99\x84\xE5\xBD\x95)
   - [6.1 支持过滤条件的 API（Generic 表）](#61-\xE6\x94\xAF\xE6\x8C\x81\xE8\xBF\x87\xE6\xBB\xA4\xE6\x9D\xA1\xE4\xBB\xB6\xE7\x9A\x84-apigeneric-\xE8\xA1\xA8)
   - [6.2 支持过滤条件的 API（List 表）](#62-\xE6\x94\xAF\xE6\x8C\x81\xE8\xBF\x87\xE6\xBB\xA4\xE6\x9D\xA1\xE4\xBB\xB6\xE7\x9A\x84-apilist-\xE8\xA1\xA8)
@@ -435,89 +435,45 @@ index_range ::=
 
 ## 5.1 示例代码说明
 
-在 TcaplusPbApiXXX.tar.gz 的 API 包中有提供 example 代码：
-
-Generic 表的 async 接口示例：
+示例代码分同步和异步代码:
 
 ```
-release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable/SingleOperation/condition_operation
-├── condition_del.cpp
-├── condition_fieldinc.cpp
-├── condition_fieldset.cpp
-├── condition_get.cpp
-├── condition_indexget.cpp
-├── condition_set.cpp
-├── condition_traverse.cpp
-├── conv.sh
-├── envcfg.env
-├── main.cpp
-├── Makefile
-├── operate_array.cpp
-├── readme.txt
-├── table_test.proto
-├── tlogconf.xml
+#同步代码示例目录
+TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable
+#异步代码示例目录
+TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable
 ```
 
-Generic 表的 coroutine 接口示例：
+涉及条件和数组相关的示例在各自的子目录中：
 
-```
-release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable/SingleOperation/condition_operation
-├── condition_del.cpp
-├── condition_fieldinc.cpp
-├── condition_fieldset.cpp
-├── condition_get.cpp
-├── condition_indexget.cpp
-├── condition_set.cpp
-├── condition_traverse.cpp
-├── conv.sh
-├── envcfg.env
-├── main.cpp
-├── Makefile
-├── operate_array.cpp
-├── readme.txt
-├── table_test.proto
-└── tlogconf.xml
-```
+- **condition_operation**: Generic 表条件操作相关的示例
+- **list_condition_operation**: List 表条件操作相关的示例
 
-List 表的 async 接口示例：
+### 5.1.1 Generic 表示例
 
-```
-release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable/SingleOperation/list_condition_operation
-├── condition_listbatchdel.cpp
-├── condition_listdel.cpp
-├── condition_listgetall.cpp
-├── condition_listget.cpp
-├── condition_listreplace.cpp
-├── condition_listtraverse.cpp
-├── conv.sh
-├── envcfg.env
-├── main.cpp
-├── Makefile
-├── operate_array.cpp
-├── readme.txt
-├── table_test.proto
-└── tlogconf.xml
-```
+| 示例代码文件           | 文件说明                                               |
+| ---------------------- | ------------------------------------------------------ |
+| operate_array.cpp      | 数组相关条件操作，包含 PUSH,POP,SET,GET 子操作示例     |
+| condition_set.cpp      | 记录级条件插入或更新，满足条件的记录才会操作成功       |
+| condition_get.cpp      | 记录级条件查询，满足条件的记录才会返回                 |
+| condition_del.cpp      | 记录级条件删除，满足条件的记录才会删除                 |
+| condition_fieldset.cpp | 记录级部分字段的插入或更新，满足条件的记录才会操作成功 |
+| condition_fieldinc.cpp | 记录级部分字段自增，满足条件的记录才会自增成功         |
+| condition_traverse.cpp | 记录级表过滤遍历，满足条件的记录才会返回               |
+| condition_indexget.cpp | 记录级主键索引过滤，满足条件的记录才会返回             |
 
-List 表的 coroutine 接口示例：
+### 5.1.2 List 表示例
 
-```
-release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable/SingleOperation/list_condition_operation
-├── condition_listbatchdel.cpp
-├── condition_listdel.cpp
-├── condition_listgetall.cpp
-├── condition_listget.cpp
-├── condition_listreplace.cpp
-├── condition_listtraverse.cpp
-├── conv.sh
-├── envcfg.env
-├── main.cpp
-├── Makefile
-├── operate_array.cpp
-├── readme.txt
-├── table_test.proto
-└── tlogconf.xml
-```
+示例代码目录：`TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable/SingleOperation/list_condition_operation`。
+|示例代码文件|文件说明|
+|---|---|
+| operate_array.cpp|list 表数组条件过滤操作，包含 PUSH,POP,SET,GET|
+|condition_listget.cpp|list 表记录级元素过滤操作，满足条件的 list 元素记录才会返回, 返回 1 个元素记录|
+|condition_listdel.cpp|ist 表记录级元素删除操作，满足条件的 list 元素记录才会删除，删除 1 个元素记录|
+|condition_listreplace.cpp|数 ist 表记录级元素替换操作，满足条件的 list 元素记录才会替换|
+|condition_listgetall.cpp|ist 表记录级元素查询操作，满足条件的 list 元素记录才会返回，返回多个元素记录|
+|condition_listbatchdel.cpp|ist 表记录级元素批量删除操作，满足条件的 list 元素记录才会删除，删除多个元素记录|
+|condition_listtraverse.cpp|list 表记录级元素遍历操作，满足条件的 list 记录才会遍历返回|
 
 ## 5.2 示例代码使用
 
@@ -621,48 +577,6 @@ make
 ```
 
 如果代码编译有问题，请检查环境变量是否生效及表代码接口定义文件是否生成。
-
-## 5.3 示例代码说明
-
-示例代码分同步和异步代码:
-
-```
-#同步代码示例目录
-TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable
-#异步代码示例目录
-TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable
-```
-
-涉及条件和数组相关的示例在各自的子目录中：
-
-- **condition_operation**: Generic 表条件操作相关的示例
-- **list_condition_operation**: List 表条件操作相关的示例
-
-### 5.3.1 Generic 表示例
-
-| 示例代码文件           | 文件说明                                               |
-| ---------------------- | ------------------------------------------------------ |
-| operate_array.cpp      | 数组相关条件操作，包含 PUSH,POP,SET,GET 子操作示例     |
-| condition_set.cpp      | 记录级条件插入或更新，满足条件的记录才会操作成功       |
-| condition_get.cpp      | 记录级条件查询，满足条件的记录才会返回                 |
-| condition_del.cpp      | 记录级条件删除，满足条件的记录才会删除                 |
-| condition_fieldset.cpp | 记录级部分字段的插入或更新，满足条件的记录才会操作成功 |
-| condition_fieldinc.cpp | 记录级部分字段自增，满足条件的记录才会自增成功         |
-| condition_traverse.cpp | 记录级表过滤遍历，满足条件的记录才会返回               |
-| condition_indexget.cpp | 记录级主键索引过滤，满足条件的记录才会返回             |
-
-### 5.3.2 List 表示例
-
-示例代码目录：`TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable/SingleOperation/list_condition_operation`。
-|示例代码文件|文件说明|
-|---|---|
-| operate_array.cpp|list 表数组条件过滤操作，包含 PUSH,POP,SET,GET|
-|condition_listget.cpp|list 表记录级元素过滤操作，满足条件的 list 元素记录才会返回, 返回 1 个元素记录|
-|condition_listdel.cpp|ist 表记录级元素删除操作，满足条件的 list 元素记录才会删除，删除 1 个元素记录|
-|condition_listreplace.cpp|数 ist 表记录级元素替换操作，满足条件的 list 元素记录才会替换|
-|condition_listgetall.cpp|ist 表记录级元素查询操作，满足条件的 list 元素记录才会返回，返回多个元素记录|
-|condition_listbatchdel.cpp|ist 表记录级元素批量删除操作，满足条件的 list 元素记录才会删除，删除多个元素记录|
-|condition_listtraverse.cpp|list 表记录级元素遍历操作，满足条件的 list 记录才会遍历返回|
 
 # 6. API 附录
 
