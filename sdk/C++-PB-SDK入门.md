@@ -1,84 +1,93 @@
 # TcaplusDB PB SDK for C++ Quickstart
 
-Table of Contents
-=================
+# Table of Contents
 
-   * [TcaplusDB PB SDK for C++ Quickstart](#tcaplusdb-pb-sdk-for-c-quickstart)
-   * [Table of Contents](#table-of-contents)
-   * [PROTOBUF 说明](#protobuf-\xE8\xAF\xB4\xE6\x98\x8E)
-   * [入门](#\xE5\x85\xA5\xE9\x97\xA8)
-   * [约束限制](#\xE7\xBA\xA6\xE6\x9D\x9F\xE9\x99\x90\xE5\x88\xB6)
-   * [环境要求](#\xE7\x8E\xAF\xE5\xA2\x83\xE8\xA6\x81\xE6\xB1\x82)
-      * [SDK 部署环境要求](#sdk-\xE9\x83\xA8\xE7\xBD\xB2\xE7\x8E\xAF\xE5\xA2\x83\xE8\xA6\x81\xE6\xB1\x82)
-      * [其它要求 (非必须)](#\xE5\x85\xB6\xE5\xAE\x83\xE8\xA6\x81\xE6\xB1\x82-\xE9\x9D\x9E\xE5\xBF\x85\xE9\xA1\xBB)
-   * [SDK 依赖安装](#sdk-\xE4\xBE\x9D\xE8\xB5\x96\xE5\xAE\x89\xE8\xA3\x85)
-         * [系统依赖库安装](#\xE7\xB3\xBB\xE7\xBB\x9F\xE4\xBE\x9D\xE8\xB5\x96\xE5\xBA\x93\xE5\xAE\x89\xE8\xA3\x85)
-         * [protobuf 安装](#protobuf-\xE5\xAE\x89\xE8\xA3\x85)
-         * [SDK 安装](#sdk-\xE5\xAE\x89\xE8\xA3\x85)
-   * [TcaplusDB 资源准备](#tcaplusdb-\xE8\xB5\x84\xE6\xBA\x90\xE5\x87\x86\xE5\xA4\x87)
-      * [TcaplusDB 表准备](#tcaplusdb-\xE8\xA1\xA8\xE5\x87\x86\xE5\xA4\x87)
-         * [准备 PROTO 表示例文件](#\xE5\x87\x86\xE5\xA4\x87-proto-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B\xE6\x96\x87\xE4\xBB\xB6)
-         * [TcaplusDB 表创建-腾讯云环境](#tcaplusdb-\xE8\xA1\xA8\xE5\x88\x9B\xE5\xBB\xBA-\xE8\x85\xBE\xE8\xAE\xAF\xE4\xBA\x91\xE7\x8E\xAF\xE5\xA2\x83)
-            * [步骤 1-集群创建](#\xE6\xAD\xA5\xE9\xAA\xA4-1-\xE9\x9B\x86\xE7\xBE\xA4\xE5\x88\x9B\xE5\xBB\xBA)
-            * [步骤 2-表格组创建](#\xE6\xAD\xA5\xE9\xAA\xA4-2-\xE8\xA1\xA8\xE6\xA0\xBC\xE7\xBB\x84\xE5\x88\x9B\xE5\xBB\xBA)
-         * [步骤 3-表创建](#\xE6\xAD\xA5\xE9\xAA\xA4-3-\xE8\xA1\xA8\xE5\x88\x9B\xE5\xBB\xBA)
-         * [TcaplusDB 表创建-Docker 环境](#tcaplusdb-\xE8\xA1\xA8\xE5\x88\x9B\xE5\xBB\xBA-docker-\xE7\x8E\xAF\xE5\xA2\x83)
-            * [步骤 1-获取集群信息](#\xE6\xAD\xA5\xE9\xAA\xA4-1-\xE8\x8E\xB7\xE5\x8F\x96\xE9\x9B\x86\xE7\xBE\xA4\xE4\xBF\xA1\xE6\x81\xAF)
-            * [步骤 2-获取表格组信息](#\xE6\xAD\xA5\xE9\xAA\xA4-2-\xE8\x8E\xB7\xE5\x8F\x96\xE8\xA1\xA8\xE6\xA0\xBC\xE7\xBB\x84\xE4\xBF\xA1\xE6\x81\xAF)
-            * [步骤 3-创建表](#\xE6\xAD\xA5\xE9\xAA\xA4-3-\xE5\x88\x9B\xE5\xBB\xBA\xE8\xA1\xA8)
-      * [示例代码](#\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81)
-         * [步骤 1-SDK 下载](#\xE6\xAD\xA5\xE9\xAA\xA4-1-sdk-\xE4\xB8\x8B\xE8\xBD\xBD)
-         * [步骤 2-集群连接信息获取](#\xE6\xAD\xA5\xE9\xAA\xA4-2-\xE9\x9B\x86\xE7\xBE\xA4\xE8\xBF\x9E\xE6\x8E\xA5\xE4\xBF\xA1\xE6\x81\xAF\xE8\x8E\xB7\xE5\x8F\x96)
-         * [步骤 3-配置环境变量](#\xE6\xAD\xA5\xE9\xAA\xA4-3-\xE9\x85\x8D\xE7\xBD\xAE\xE7\x8E\xAF\xE5\xA2\x83\xE5\x8F\x98\xE9\x87\x8F)
-         * [步骤 4-生成表接口定义代码](#\xE6\xAD\xA5\xE9\xAA\xA4-4-\xE7\x94\x9F\xE6\x88\x90\xE8\xA1\xA8\xE6\x8E\xA5\xE5\x8F\xA3\xE5\xAE\x9A\xE4\xB9\x89\xE4\xBB\xA3\xE7\xA0\x81)
-         * [步骤 5-修改 Makefile](#\xE6\xAD\xA5\xE9\xAA\xA4-5-\xE4\xBF\xAE\xE6\x94\xB9-makefile)
-         * [步骤 6-执行示例](#\xE6\xAD\xA5\xE9\xAA\xA4-6-\xE6\x89\xA7\xE8\xA1\x8C\xE7\xA4\xBA\xE4\xBE\x8B)
-         * [步骤 7-查看插入数据](#\xE6\xAD\xA5\xE9\xAA\xA4-7-\xE6\x9F\xA5\xE7\x9C\x8B\xE6\x8F\x92\xE5\x85\xA5\xE6\x95\xB0\xE6\x8D\xAE)
-# PROTOBUF 说明
+- [TcaplusDB PB SDK for C++ Quickstart](#tcaplusdb-pb-sdk-for-c-quickstart)
+- [Table of Contents](#table-of-contents)
+- [1. PROTOBUF 说明](#1-protobuf-\xE8\xAF\xB4\xE6\x98\x8E)
+- [2. 入门](#2-\xE5\x85\xA5\xE9\x97\xA8)
+- [3. 约束限制](#3-\xE7\xBA\xA6\xE6\x9D\x9F\xE9\x99\x90\xE5\x88\xB6)
+- [4. 环境要求](#4-\xE7\x8E\xAF\xE5\xA2\x83\xE8\xA6\x81\xE6\xB1\x82)
+  - [4.1 SDK 部署环境要求](#41-sdk-\xE9\x83\xA8\xE7\xBD\xB2\xE7\x8E\xAF\xE5\xA2\x83\xE8\xA6\x81\xE6\xB1\x82)
+  - [4.2 其它要求 (非必须)](#42-\xE5\x85\xB6\xE5\xAE\x83\xE8\xA6\x81\xE6\xB1\x82-\xE9\x9D\x9E\xE5\xBF\x85\xE9\xA1\xBB)
+- [5. SDK 依赖安装](#5-sdk-\xE4\xBE\x9D\xE8\xB5\x96\xE5\xAE\x89\xE8\xA3\x85)
+  - [5.1 资源准备](#51-\xE8\xB5\x84\xE6\xBA\x90\xE5\x87\x86\xE5\xA4\x87)
+  - [5.2 系统依赖库安装](#52-\xE7\xB3\xBB\xE7\xBB\x9F\xE4\xBE\x9D\xE8\xB5\x96\xE5\xBA\x93\xE5\xAE\x89\xE8\xA3\x85)
+  - [5.3 protobuf 安装](#53-protobuf-\xE5\xAE\x89\xE8\xA3\x85)
+  - [5.4 SDK 依赖安装](#54-sdk-\xE4\xBE\x9D\xE8\xB5\x96\xE5\xAE\x89\xE8\xA3\x85)
+- [6. TcaplusDB 资源准备](#6-tcaplusdb-\xE8\xB5\x84\xE6\xBA\x90\xE5\x87\x86\xE5\xA4\x87)
+  - [6.1 TcaplusDB 表准备](#61-tcaplusdb-\xE8\xA1\xA8\xE5\x87\x86\xE5\xA4\x87)
+    - [6.1.1 准备 PROTO 表示例文件](#611-\xE5\x87\x86\xE5\xA4\x87-proto-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B\xE6\x96\x87\xE4\xBB\xB6)
+    - [6.1.2 TcaplusDB 表创建-腾讯云环境](#612-tcaplusdb-\xE8\xA1\xA8\xE5\x88\x9B\xE5\xBB\xBA-\xE8\x85\xBE\xE8\xAE\xAF\xE4\xBA\x91\xE7\x8E\xAF\xE5\xA2\x83)
+      - [步骤 1-集群创建](#\xE6\xAD\xA5\xE9\xAA\xA4-1-\xE9\x9B\x86\xE7\xBE\xA4\xE5\x88\x9B\xE5\xBB\xBA)
+      - [步骤 2-表格组创建](#\xE6\xAD\xA5\xE9\xAA\xA4-2-\xE8\xA1\xA8\xE6\xA0\xBC\xE7\xBB\x84\xE5\x88\x9B\xE5\xBB\xBA)
+    - [步骤 3-表创建](#\xE6\xAD\xA5\xE9\xAA\xA4-3-\xE8\xA1\xA8\xE5\x88\x9B\xE5\xBB\xBA)
+    - [TcaplusDB 表创建-Docker 环境](#tcaplusdb-\xE8\xA1\xA8\xE5\x88\x9B\xE5\xBB\xBA-docker-\xE7\x8E\xAF\xE5\xA2\x83)
+      - [步骤 1-获取集群信息](#\xE6\xAD\xA5\xE9\xAA\xA4-1-\xE8\x8E\xB7\xE5\x8F\x96\xE9\x9B\x86\xE7\xBE\xA4\xE4\xBF\xA1\xE6\x81\xAF)
+      - [步骤 2-获取表格组信息](#\xE6\xAD\xA5\xE9\xAA\xA4-2-\xE8\x8E\xB7\xE5\x8F\x96\xE8\xA1\xA8\xE6\xA0\xBC\xE7\xBB\x84\xE4\xBF\xA1\xE6\x81\xAF)
+      - [步骤 3-创建表](#\xE6\xAD\xA5\xE9\xAA\xA4-3-\xE5\x88\x9B\xE5\xBB\xBA\xE8\xA1\xA8)
+  - [6.2 示例代码](#62-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81)
+    - [步骤 1-SDK 下载](#\xE6\xAD\xA5\xE9\xAA\xA4-1-sdk-\xE4\xB8\x8B\xE8\xBD\xBD)
+    - [步骤 2-集群连接信息获取](#\xE6\xAD\xA5\xE9\xAA\xA4-2-\xE9\x9B\x86\xE7\xBE\xA4\xE8\xBF\x9E\xE6\x8E\xA5\xE4\xBF\xA1\xE6\x81\xAF\xE8\x8E\xB7\xE5\x8F\x96)
+    - [步骤 3-配置环境变量](#\xE6\xAD\xA5\xE9\xAA\xA4-3-\xE9\x85\x8D\xE7\xBD\xAE\xE7\x8E\xAF\xE5\xA2\x83\xE5\x8F\x98\xE9\x87\x8F)
+    - [步骤 4-生成表接口定义代码](#\xE6\xAD\xA5\xE9\xAA\xA4-4-\xE7\x94\x9F\xE6\x88\x90\xE8\xA1\xA8\xE6\x8E\xA5\xE5\x8F\xA3\xE5\xAE\x9A\xE4\xB9\x89\xE4\xBB\xA3\xE7\xA0\x81)
+    - [步骤 5-修改 Makefile](#\xE6\xAD\xA5\xE9\xAA\xA4-5-\xE4\xBF\xAE\xE6\x94\xB9-makefile)
+    - [步骤 6-执行示例](#\xE6\xAD\xA5\xE9\xAA\xA4-6-\xE6\x89\xA7\xE8\xA1\x8C\xE7\xA4\xBA\xE4\xBE\x8B)
+    - [步骤 7-查看插入数据](#\xE6\xAD\xA5\xE9\xAA\xA4-7-\xE6\x9F\xA5\xE7\x9C\x8B\xE6\x8F\x92\xE5\x85\xA5\xE6\x95\xB0\xE6\x8D\xAE)
+
+# 1. PROTOBUF 说明
 
 PB (PROTO) 表是基于 PROTOBUF 协议设计的 TcaplusDB 表，PROTOBUF 协议是 Google 开源的通用 RPC 通信协议，用于 TcaplusDB 存储数据的序列化、反序列化等操作，具体关于 PROTO 表的定义说明可参考章节：[PROTO 表定义](https://cloud.tencent.com/document/product/596/44406)。PROTO 表定义以 protobuf 格式来定义表结构，支持丰富的数据类型, 可参考 protobuf 支持的类型。
 
-# 入门
+# 2. 入门
 
 快速入手 PROTOBUF 协议表的开发涉及几个步骤，下面介绍如何基于 TcalusDB 的腾讯云环境或本地 Docker 版环境，快速上手基于 C++ 进行 PROTO 表的增删查改操作。所有操作均在申请的开发测试机或云主机进行。
 
-# 约束限制
-|编号|资源|限制|
-|---|---|---|
-|1|单表格组允许表格数|256|
-|2|单表大小|2.56PB|
-|3|Generic表主键字段数|8|
-|4|Generic表字段数|256|
-|5|List表主键字段数|7|
-|6|List表字段数|255|
-|7|List表中元素个数,单key对应链表元素个数|10000|
-|8|表名长度|32Bytes|
-|9|字段名长度|32Bytes|
-|10|主键字段值大小|1KB|
-|11|非主键字段值大小|10MB|
-|12|单记录大小|10MB|
-|13|批量查询返回记录数|1024|
+# 3. 约束限制
 
+| 编号 | 资源                                      | 限制    |
+| ---- | ----------------------------------------- | ------- |
+| 1    | 单表格组允许表格数                        | 256     |
+| 2    | 单表大小                                  | 2.56PB  |
+| 3    | Generic 表主键字段数                      | 8       |
+| 4    | Generic 表字段数                          | 256     |
+| 5    | List 表主键字段数                         | 7       |
+| 6    | List 表字段数                             | 255     |
+| 7    | List 表中元素个数,单 key 对应链表元素个数 | 10000   |
+| 8    | 表名长度                                  | 32Bytes |
+| 9    | 字段名长度                                | 32Bytes |
+| 10   | 主键字段值大小                            | 1KB     |
+| 11   | 非主键字段值大小                          | 10MB    |
+| 12   | 单记录大小                                | 10MB    |
+| 13   | 批量查询返回记录数                        | 1024    |
 
-# 环境要求
+# 4. 环境要求
 
-## SDK 部署环境要求
+## 4.1 SDK 部署环境要求
 
 - **机器配置**: 建议 2c4g, Centos7 64bit, 腾讯云 CVM
 - **GCC 版本**: 4.8.5 以上
-- **protobuf 版本**: 3.5.0 以上
+- **protobuf 版本**: 3.5.1 以上
 - **TcaplusDB SDK 版本** : 3.46.0 以上
 
-## 其它要求 (非必须)
+## 4.2 其它要求 (非必须)
 
 TcaplusDB 除了腾讯云环境,也支持本地版环境.本地环境主要用于开发调试. 对于本地版环境,需要额外部署 docker 环境.
 具体请参考资料：[TcaplusDB 入门-Docker 部署篇.md](https://github.com/tencentyun/tcaplusdb-documents/blob/main/docker/TcaplusDB%E5%85%A5%E9%97%A8-Docker%E9%83%A8%E7%BD%B2%E7%AF%87.md)。
 
 如果是基于 Docker 本地版进行 SDK 调试, 可以参考上述链接文档进行相关操作. TcaplusDB 还提供了 tcapluscli 工具进行相关资源操作, 如资源创建,删除,查看. 具体可查阅:[tcapluscli 手册](https://github.com/tencentyun/tcaplusdb-documents/tree/main/tcapluscli).
 
-# SDK 依赖安装
+# 5. SDK 依赖安装
 
-### 系统依赖库安装
+## 5.1 资源准备
+
+| 资源名称           | 版本   | 资源说明           | 下载地址                                                                                                                                    |
+| ------------------ | ------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| TcaplusPbApi3.46.0 | 3.46.0 | PB SDK             | [下载](https://tcaplusdb-sdk-1301716906.cos.ap-shanghai.myqcloud.com/release/3-46/TcaplusPbApi3.46.0.199033.x86_64_release_20201210.tar.gz) |
+| TSF4G              | 2.7.37 | SDK 编译依赖系统库 | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release.tar.gz)                  |
+| protobuf           | 3.5.1  | protobuf 库,protoc | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/protobuf-cpp-3.5.1.tar.gz)                                          |
+
+## 5.2 系统依赖库安装
 
 SDK 依赖一些系统库,主要如下:
 
@@ -112,9 +121,9 @@ ls libcrypto.so.*
 ln -s /usr/lib64/libcrypto.so.1.0.2k /usr/lib64/libcrypto.so
 ```
 
-### protobuf 安装
+## 5.3 protobuf 安装
 
-需要下载源码编译安装,或安装已经编译好的 protobuf. 版本要求:`3.5.0以上`. 下载地址: [protobuf-cpp-3.5.0.tar.gz](https://github.com/protocolbuffers/protobuf/releases/download/v3.5.0/protobuf-cpp-3.5.0.tar.gz). 具体源码编译安装步骤:
+从上述下载好的源码包解压，具体源码编译安装步骤:
 
 ```
 ./configure --prefix=/usr/local/protobuf
@@ -133,15 +142,23 @@ make install
 libprotoc 3.5.0
 ```
 
-### SDK 安装
+## 5.4 SDK 依赖安装
 
-下载 TcaplusDB C++ PB SDK. 下载方式: [TcaplusPbApi3.46.0](https://tcaplusdb-sdk-1301716906.cos.ap-shanghai.myqcloud.com/release/3-46/TcaplusPbApi3.46.0.199033.x86_64_release_20201210.tar.gz).
+参考 5.1 下载 TcaplusDB C++ PB SDK 并解压。
 
-# TcaplusDB 资源准备
+参考 5.1 下载安装 TSF4G 系统依赖 SDK。
 
-## TcaplusDB 表准备
+```
+tar zxvf TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release.tar.gz
+mkdir /usr/local/tsf4g
+mv ./TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release/release/x86_64/* /usr/local/tsf4g/
+```
 
-### 准备 PROTO 表示例文件
+# 6. TcaplusDB 资源准备
+
+## 6.1 TcaplusDB 表准备
+
+### 6.1.1 准备 PROTO 表示例文件
 
 这里以示例中的 table_test.proto 举例，表名: `tb_online`, 表类型: `GENERIC`。文件具体内容如下：
 
@@ -176,7 +193,7 @@ message tb_online {
 
 将上述文件内容保存为`table_test.proto`。
 
-### TcaplusDB 表创建-腾讯云环境
+### 6.1.2 TcaplusDB 表创建-腾讯云环境
 
 #### 步骤 1-集群创建
 
@@ -221,7 +238,7 @@ message tb_online {
 - Error3: schema-type 出错, 业务默认为 PROTO, 如果填其它则报错
 - Error4: schema-file 出错, 可能找不到 shcema file, 建议把 proto 文件放在和 tcapluscli 同目录下
 
-## 示例代码
+## 6.2 示例代码
 
 以 C++ 示例代码为例，介绍如何使用 PROTOBUF 接口进行 TcaplusDB 表数据操作，这里主要介绍 Generic 类型表操作。
 
