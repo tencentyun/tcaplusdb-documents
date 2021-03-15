@@ -1,40 +1,5 @@
 # TcaplusDB 新特性说明手册
 
-# Table of Contents
-
-- [TcaplusDB 新特性说明手册](#tcaplusdb-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE8\xAF\xB4\xE6\x98\x8E\xE6\x89\x8B\xE5\x86\x8C)
-- [Table of Contents](#table-of-contents)
-- [1. 介绍](#1-\xE4\xBB\x8B\xE7\xBB\x8D)
-- [2.前置工作](#2\xE5\x89\x8D\xE7\xBD\xAE\xE5\xB7\xA5\xE4\xBD\x9C)
-  - [2.1 资源下载](#21-\xE8\xB5\x84\xE6\xBA\x90\xE4\xB8\x8B\xE8\xBD\xBD)
-  - [2.2 示例表](#22-\xE7\xA4\xBA\xE4\xBE\x8B\xE8\xA1\xA8)
-  - [2.3 示例接口说明](#23-\xE7\xA4\xBA\xE4\xBE\x8B\xE6\x8E\xA5\xE5\x8F\xA3\xE8\xAF\xB4\xE6\x98\x8E)
-- [3. 新特性-条件过滤说明](#3-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7-\xE6\x9D\xA1\xE4\xBB\xB6\xE8\xBF\x87\xE6\xBB\xA4\xE8\xAF\xB4\xE6\x98\x8E)
-  - [3.1 条件过滤特性背景介绍](#31-\xE6\x9D\xA1\xE4\xBB\xB6\xE8\xBF\x87\xE6\xBB\xA4\xE7\x89\xB9\xE6\x80\xA7\xE8\x83\x8C\xE6\x99\xAF\xE4\xBB\x8B\xE7\xBB\x8D)
-  - [3.2 条件过滤接口说明](#32-\xE6\x9D\xA1\xE4\xBB\xB6\xE8\xBF\x87\xE6\xBB\xA4\xE6\x8E\xA5\xE5\x8F\xA3\xE8\xAF\xB4\xE6\x98\x8E)
-  - [3.3 条件过滤语法说明](#33-\xE6\x9D\xA1\xE4\xBB\xB6\xE8\xBF\x87\xE6\xBB\xA4\xE8\xAF\xAD\xE6\xB3\x95\xE8\xAF\xB4\xE6\x98\x8E)
-  - [3.4 过滤条件的约束](#34-\xE8\xBF\x87\xE6\xBB\xA4\xE6\x9D\xA1\xE4\xBB\xB6\xE7\x9A\x84\xE7\xBA\xA6\xE6\x9D\x9F)
-  - [3.5 性能优化建议](#35-\xE6\x80\xA7\xE8\x83\xBD\xE4\xBC\x98\xE5\x8C\x96\xE5\xBB\xBA\xE8\xAE\xAE)
-- [4. 新特性-数组操作](#4-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7-\xE6\x95\xB0\xE7\xBB\x84\xE6\x93\x8D\xE4\xBD\x9C)
-  - [4.1 新特性背景介绍](#41-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE8\x83\x8C\xE6\x99\xAF\xE4\xBB\x8B\xE7\xBB\x8D)
-  - [4.2 新特性接口介绍](#42-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE6\x8E\xA5\xE5\x8F\xA3\xE4\xBB\x8B\xE7\xBB\x8D)
-  - [4.3 新特性使用示例](#43-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE4\xBD\xBF\xE7\x94\xA8\xE7\xA4\xBA\xE4\xBE\x8B)
-    - [4.3.1 数组更新示例](#431-\xE6\x95\xB0\xE7\xBB\x84\xE6\x9B\xB4\xE6\x96\xB0\xE7\xA4\xBA\xE4\xBE\x8B)
-    - [4.3.2 数组查询示例](#432-\xE6\x95\xB0\xE7\xBB\x84\xE6\x9F\xA5\xE8\xAF\xA2\xE7\xA4\xBA\xE4\xBE\x8B)
-  - [4.4 新特性语法说明](#44-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE8\xAF\xAD\xE6\xB3\x95\xE8\xAF\xB4\xE6\x98\x8E)
-  - [4.5 新特性约束](#45-\xE6\x96\xB0\xE7\x89\xB9\xE6\x80\xA7\xE7\xBA\xA6\xE6\x9D\x9F)
-- [5. 示例代码](#5-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81)
-  - [5.1 示例代码说明](#51-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81\xE8\xAF\xB4\xE6\x98\x8E)
-    - [5.1.1 Generic 表示例](#511-generic-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B)
-    - [5.1.2 List 表示例](#512-list-\xE8\xA1\xA8\xE7\xA4\xBA\xE4\xBE\x8B)
-  - [5.2 示例代码使用](#52-\xE7\xA4\xBA\xE4\xBE\x8B\xE4\xBB\xA3\xE7\xA0\x81\xE4\xBD\xBF\xE7\x94\xA8)
-    - [5.2.1 代码编译](#521-\xE4\xBB\xA3\xE7\xA0\x81\xE7\xBC\x96\xE8\xAF\x91)
-- [6. API 附录](#6-api-\xE9\x99\x84\xE5\xBD\x95)
-  - [6.1 支持过滤条件的 API（Generic 表）](#61-\xE6\x94\xAF\xE6\x8C\x81\xE8\xBF\x87\xE6\xBB\xA4\xE6\x9D\xA1\xE4\xBB\xB6\xE7\x9A\x84-apigeneric-\xE8\xA1\xA8)
-  - [6.2 支持过滤条件的 API（List 表）](#62-\xE6\x94\xAF\xE6\x8C\x81\xE8\xBF\x87\xE6\xBB\xA4\xE6\x9D\xA1\xE4\xBB\xB6\xE7\x9A\x84-apilist-\xE8\xA1\xA8)
-  - [6.3 数组操作的 API（Generic 表）](#63-\xE6\x95\xB0\xE7\xBB\x84\xE6\x93\x8D\xE4\xBD\x9C\xE7\x9A\x84-apigeneric-\xE8\xA1\xA8)
-  - [6.4 数组操作的 API（List 表）](#64-\xE6\x95\xB0\xE7\xBB\x84\xE6\x93\x8D\xE4\xBD\x9C\xE7\x9A\x84-apilist-\xE8\xA1\xA8)
-
 # 1. 介绍
 
 为了满足更多业务场景需要，提供更灵活的数据访问操作，TcaplusDB 新增了条件操作的特性，当前仅支持 protobuf 协议的表，该特性具有以下功能：
@@ -51,8 +16,7 @@
 
 | 资源名称                                                 | 版本   | 下载地址                                                                                                                          | 说明                 |
 | -------------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| TcaplusPbApi3.52.0.203403.x86_64_release_20210304.tar.gz | 3.52.0 | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/TcaplusPbApi3.52.0.203403.x86_64_release_20210304.tar.gz) | PB SDK 代码示例      |
-| TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release.tar.gz        | 2.7.37 | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release.tar.gz)        | 示例编译依赖的系统包 |
+| TcaplusPbApi3.52.0.203458.x86_64_release_20210312.tar.gz | 3.52.0 | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/TcaplusPbApi3.52.0.203458.x86_64_release_20210312.tar.gz) | PB SDK 代码示例      |
 | Protobuf                                                 | 3.5.1  | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/sdk/protobuf-cpp-3.5.1.tar.gz)                                | protobuf 库          |
 
 ## 2.2 示例表
@@ -159,7 +123,7 @@ u.set_id(1);
 u.set_name("a");
 // 先判断gameids是否已经包含101，若不存在（条件不满足）再插入101
 int ret = api.UpdateItem(&u, "PUSH gameids#[-1][$ = 101]", "gameids NOT CONTAINS($==101)");
-if (ret == COMMON_ERR_EXPR_CONDITION_NOT_MATCHED) // 条件不满足，说明gameids已经存在101了
+if (ret == COMMON_ERR_CONDITION_NOT_MATCHED) // 条件不满足，说明gameids已经存在101了
 {
     // ...
 }
@@ -169,7 +133,7 @@ if (ret == COMMON_ERR_EXPR_CONDITION_NOT_MATCHED) // 条件不满足，说明gam
 
 ## 3.2 条件过滤接口说明
 
-TcaplusDB 提供的一些 protobuf API 新增了 `const std::string &condition` 入参，用于指定过滤条件，支持 condition 的接口详见后文的 API 附录。
+TcaplusDB 提供的一些 protobuf API 新增了 `const std::string &condition` 入参，用于指定过滤条件，支持 condition 的接口以及新增的错误码详见后文的附录。
 
 一些接口的使用示例如下，更多的示例可见详细 example。
 
@@ -190,7 +154,7 @@ u.set_name("a");
 // ...
 // 当rank>100，才执行Set操作，若条件不满足会返回对应的错误码
 int ret = api.Set(&u, "", "rank > 100");
-if (ret == COMMON_ERR_EXPR_CONDITION_NOT_MATCHED) { ... } // 条件不满足的情况
+if (ret == COMMON_ERR_CONDITION_NOT_MATCHED) { ... } // 条件不满足的情况
 
 // 设置递增的步长
 u.set_rank(1);
@@ -435,45 +399,89 @@ index_range ::=
 
 ## 5.1 示例代码说明
 
-示例代码分同步和异步代码:
+在 TcaplusPbApi3.52.0.203458.x86_64_release_20210312.tar.gz 的 API 包中有提供 example 代码：
+
+Generic 表的 async 接口示例：
 
 ```
-#同步代码示例目录
-TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable
-#异步代码示例目录
-TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable
+release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable/SingleOperation/condition_operation
+├── condition_del.cpp
+├── condition_fieldinc.cpp
+├── condition_fieldset.cpp
+├── condition_get.cpp
+├── condition_indexget.cpp
+├── condition_set.cpp
+├── condition_traverse.cpp
+├── conv.sh
+├── envcfg.env
+├── main.cpp
+├── Makefile
+├── operate_array.cpp
+├── readme.txt
+├── table_test.proto
+├── tlogconf.xml
 ```
 
-涉及条件和数组相关的示例在各自的子目录中：
+Generic 表的 coroutine 接口示例：
 
-- **condition_operation**: Generic 表条件操作相关的示例
-- **list_condition_operation**: List 表条件操作相关的示例
+```
+release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable/SingleOperation/condition_operation
+├── condition_del.cpp
+├── condition_fieldinc.cpp
+├── condition_fieldset.cpp
+├── condition_get.cpp
+├── condition_indexget.cpp
+├── condition_set.cpp
+├── condition_traverse.cpp
+├── conv.sh
+├── envcfg.env
+├── main.cpp
+├── Makefile
+├── operate_array.cpp
+├── readme.txt
+├── table_test.proto
+└── tlogconf.xml
+```
 
-### 5.1.1 Generic 表示例
+List 表的 async 接口示例：
 
-| 示例代码文件           | 文件说明                                               |
-| ---------------------- | ------------------------------------------------------ |
-| operate_array.cpp      | 数组相关条件操作，包含 PUSH,POP,SET,GET 子操作示例     |
-| condition_set.cpp      | 记录级条件插入或更新，满足条件的记录才会操作成功       |
-| condition_get.cpp      | 记录级条件查询，满足条件的记录才会返回                 |
-| condition_del.cpp      | 记录级条件删除，满足条件的记录才会删除                 |
-| condition_fieldset.cpp | 记录级部分字段的插入或更新，满足条件的记录才会操作成功 |
-| condition_fieldinc.cpp | 记录级部分字段自增，满足条件的记录才会自增成功         |
-| condition_traverse.cpp | 记录级表过滤遍历，满足条件的记录才会返回               |
-| condition_indexget.cpp | 记录级主键索引过滤，满足条件的记录才会返回             |
+```
+release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable/SingleOperation/list_condition_operation
+├── condition_listbatchdel.cpp
+├── condition_listdel.cpp
+├── condition_listgetall.cpp
+├── condition_listget.cpp
+├── condition_listreplace.cpp
+├── condition_listtraverse.cpp
+├── conv.sh
+├── envcfg.env
+├── main.cpp
+├── Makefile
+├── operate_array.cpp
+├── readme.txt
+├── table_test.proto
+└── tlogconf.xml
+```
 
-### 5.1.2 List 表示例
+List 表的 coroutine 接口示例：
 
-示例代码目录：`TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_asyncmode_simpletable/SingleOperation/list_condition_operation`。
-|示例代码文件|文件说明|
-|---|---|
-| operate_array.cpp|list 表数组条件过滤操作，包含 PUSH,POP,SET,GET|
-|condition_listget.cpp|list 表记录级元素过滤操作，满足条件的 list 元素记录才会返回, 返回 1 个元素记录|
-|condition_listdel.cpp|ist 表记录级元素删除操作，满足条件的 list 元素记录才会删除，删除 1 个元素记录|
-|condition_listreplace.cpp|数 ist 表记录级元素替换操作，满足条件的 list 元素记录才会替换|
-|condition_listgetall.cpp|ist 表记录级元素查询操作，满足条件的 list 元素记录才会返回，返回多个元素记录|
-|condition_listbatchdel.cpp|ist 表记录级元素批量删除操作，满足条件的 list 元素记录才会删除，删除多个元素记录|
-|condition_listtraverse.cpp|list 表记录级元素遍历操作，满足条件的 list 记录才会遍历返回|
+```
+release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable/SingleOperation/list_condition_operation
+├── condition_listbatchdel.cpp
+├── condition_listdel.cpp
+├── condition_listgetall.cpp
+├── condition_listget.cpp
+├── condition_listreplace.cpp
+├── condition_listtraverse.cpp
+├── conv.sh
+├── envcfg.env
+├── main.cpp
+├── Makefile
+├── operate_array.cpp
+├── readme.txt
+├── table_test.proto
+└── tlogconf.xml
+```
 
 ## 5.2 示例代码使用
 
@@ -501,19 +509,11 @@ make && make install
 3.5.1
 ```
 
-- **步骤 4, TSF4G 依赖安装**
+- **步骤 4, SDK 示例连接信息**
 
 ```
-tar zxvf TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release.tar.gz
-mkdir /usr/local/tsf4g
-mv ./TSF4G_BASE-2.7.37.0a1db41b8_X86_64_Release/release/x86_64/* /usr/local/tsf4g/
-```
-
-- **步骤 5, SDK 示例连接信息**
-
-```
-tar zxvf TcaplusPbApi3.52.0.203403.x86_64_release_20210304.tar.gz
-cd TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/C++_common_for_pb2
+tar zxvf TcaplusPbApi3.52.0.203458.x86_64_release_20210312.tar.gz
+cd TcaplusPbApi3.52.0.203458.x86_64_release_20210312/release/x86_64/examples/C++_common_for_pb2
 # 编辑common.h
 // 目标业务的tcapdir地址, 腾讯云页面地址
 static const char DIR_URL_ARRAY[][TCAPLUS_MAX_STRING_LENGTH] =
@@ -533,23 +533,19 @@ static const int32_t ZONE_ID = 1;
 static const char * SIGNATURE = "xxx";
 ```
 
-- **步骤 6, 示例代码编译，以 Generic 表的同步接口示例中的 condition_operation 条件过滤举例**
+- **步骤 5, 示例代码编译，以 Generic 表的同步接口示例中的 condition_operation 条件过滤举例**
 
 ```
 #进示例目录
-cd ./TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable/SingleOperation/condition_operation
+cd ./TcaplusPbApi3.52.0.203458.x86_64_release_20210312/release/x86_64/examples/tcaplus/C++_pb3_coroutine_simpletable/SingleOperation/condition_operation
 ```
 
 ```
 #配置环境变量，打开文件envcfg.env，如下四个环境变量，根据实际部署目录来设置:
 
-export TSF4G_HOME=/usr/local/tsf4g;
-
 export PROTOBUF_HOME=/usr/local/protobuf;
 
-export TCAPLUS_PB_HOME=/root/TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64;
-
-export TCAPLUS_HOME=/root/TcaplusPbApi3.52.0.203403.x86_64_release_20210304/release/x86_64;
+export TCAPLUS_HOME=/root/TcaplusPbApi3.52.0.203458.x86_64_release_20210312/release/x86_64;
 
 #配置完后，让环境变量生效
 source envcfg.env
@@ -558,15 +554,15 @@ source envcfg.env
 ```
 #配置conv.sh, 生成表定义接口代码
 #将表定义文件通过protoc转换为h和cc文件, 如下所示
-${PROTOBUF_HOME}/bin/protoc -I${PROTOBUF_HOME}/include/ -I${TCAPLUS_PB_HOME}/include/tcaplus_pb_api/ --cpp_out=./  --proto_path=./ table_test.proto
+${PROTOBUF_HOME}/bin/protoc -I${PROTOBUF_HOME}/include/ -I${TCAPLUS_HOME}/include/tcaplus_pb_api/ --cpp_out=./  --proto_path=./ table_test.proto
 ```
 
 ```
 #配置Makefile, 主要是检查LIBS和INC配置，如下：
-LIBS += -L $(PROTOBUF_HOME)/lib -L$(TCAPLUS_HOME)/lib -L$(TCAPLUS_PB_HOME)/lib -L$(TSF4G_HOME)/lib \
--Wl,-Bstatic -ltcaplusprotobufapi -ltsf4g_r -lprotobuf -lreadline -lncurses -lscew -lexpat -Wl,-Bdynamic -lpthread -lz -ldl -lcrypto -lanl
+LIBS += -L $(PROTOBUF_HOME)/lib64_release -L$(TCAPLUS_HOME)/lib \
+-Wl,-Bstatic -ltcaplusprotobufapi -lprotobuf -lscew -lexpat -Wl,-Bdynamic -lpthread -lz -ldl -lcrypto -lanl
 
-INC =-I$(PROTOBUF_HOME)/include -I$(TCAPLUS_PB_HOME)/include/tcaplus_pb_api/ -I../../../C++_common_for_pb2
+INC =-I$(PROTOBUF_HOME)/include -I$(TCAPLUS_HOME)/include/tcaplus_pb_api/ -I../../../C++_common_for_pb
 ```
 
 ```
@@ -576,13 +572,25 @@ sh conv.sh
 make
 ```
 
-如果代码编译有问题，请检查环境变量是否生效及表代码接口定义文件是否生成。
+如果代码编译有问题，请检查环境变量是否生效及表代码接口定义文件是否生成
 
-# 6. API 附录
+# 6. 新增错误码 附录
+
+错误码定义的头文件见 `tcaplus_error_code.h`。
+
+| 错误定义                               | 错误码值 | 描述                                       |
+|---------------------------------------|---------|--------------------------------------------|
+| COMMON_ERR_CONDITION_NOT_MATCHED      |  281    | 过滤条件不满足                              |
+| COMMON_ERR_INVALID_EXPR_SYNTAX        | -4377   | 条件或者操作语句的语法错误                   |
+| COMMON_ERR_INVALID_ARRAY_INDEX        | -4633   | 数组下标或者下标范围无效                     |
+| COMMON_ERR_INVALID_FIELD_NAME         | -4889   | 不存在或者无效的字段名称                     |
+| COMMON_ERR_INVALID_EXPR_TYPE          | -5145   | 表达式的值类型错误，如用字符串赋值给整型的字段 |
+
+# 7. API 附录
 
 这里仅列出 coroutine 的 API，async 的类似。
 
-## 6.1 支持过滤条件的 API（Generic 表）
+## 7.1 支持过滤条件的 API（Generic 表）
 
 ```cpp
     /**
@@ -590,7 +598,7 @@ make
     *
     *    @param [INOUT] msg   用户输入的key值，返回指定字段填到msg中
     *    @param [IN] condition 过滤条件
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足
     *    @retval <0   失败，返回对应的错误码。
     *    @retval 0    成功。
     */
@@ -619,7 +627,7 @@ make
     *    @param [IN] msg   数据记录msg，包含用户需要删除记录的key值
     *    @param [IN] condition 过滤条件，仅当该条件满足时才会执行Del操作。
     *    @retval TXHDB_ERR_RECORD_NOT_EXIST  记录不存在。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足，不会删除记录。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足，不会删除记录。
     *    @retval <0   失败，返回对应的错误码。
     *    @retval 0    成功。
     */
@@ -633,7 +641,7 @@ make
     *    @param [INOUT] msg   用户输入的key值，以及需要设置的数据记录msg。
     *    @param [IN] operation 在Set操作执行成功的基础上，再执行的附加操作。operation是对数组的操作表达式，即PUSH或POP操作。
     *    @param [IN] condition 过滤条件，仅当该条件满足时才会执行Set操作。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足，不更新记录。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足，不更新记录。
     *    @retval <0   失败，返回对应的错误码。
     *    @retval 0    成功。
     */
@@ -646,7 +654,7 @@ make
     *    @param [IN] operation 在FieldInc操作执行成功的基础上，再执行的附加操作。operation是对数组的操作表达式，即PUSH或POP操作
     *    @param [IN] condition 过滤条件，仅当该条件满足时才会执行修改操作。
     *    @retval TXHDB_ERR_RECORD_NOT_EXIST  记录不存在。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足，没有任何字段更新。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足，没有任何字段更新。
     *    @retval <0   失败，返回对应的错误码。表示没有任何字段更新。
     *    @retval 0    成功。全部字段更新成功。
     */
@@ -661,7 +669,7 @@ make
     *    @param [IN] operation 在FieldSet操作执行成功的基础上，再执行的附加操作。operation是对数组的操作表达式，即PUSH或POP操作
     *    @param [IN] condition 过滤条件，仅当该条件满足时才会执行FieldSet操作。
     *    @retval TXHDB_ERR_RECORD_NOT_EXIST  记录不存在。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足，没有任何字段更新。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足，没有任何字段更新。
     *    @retval <0   失败，返回对应的错误码。表示没有任何字段更新。
     *    @retval 0    成功。全部字段更新成功。
     */
@@ -680,7 +688,7 @@ make
     int Traverse(::google::protobuf::Message *msg, const std::string &condition, TcaplusTraverseCallback *cb);
 ```
 
-## 6.2 支持过滤条件的 API（List 表）
+## 7.2 支持过滤条件的 API（List 表）
 
 ```cpp
     /**
@@ -699,7 +707,7 @@ make
     *    @param [INOUT] req   数据记录msg，包含用户输入的key值，返回指定字段填到msg中
     *    @param [OUT] res 返回结果集
     *    @retval SVR_ERR_FAIL_INVALID_INDEX  req.m_setElemIndexes传入的下标无效，不会有任何数据变更。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  对于req.m_setElemIndexes中所有的下标，没有任何一个condition不满足，不会有任何数据变更。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  对于req.m_setElemIndexes中所有的下标，没有任何一个condition不满足，不会有任何数据变更。
     *    @retval 0    成功。至少有一个字段查询成功才会返回0。
     */
     int ListBatchDel(NS_TCAPLUS_PROTOBUF_API::ListBatchDeleteRequest &req, NS_TCAPLUS_PROTOBUF_API::ListBatchDeleteResponse *res);
@@ -745,7 +753,7 @@ make
     int ListTraverse(NS_TCAPLUS_PROTOBUF_API::ListTraverseRequest &req, TcaplusTraverseCallback *cb);
 ```
 
-## 6.3 数组操作的 API（Generic 表）
+## 7.3 数组操作的 API（Generic 表）
 
 ```cpp
     /**
@@ -758,7 +766,7 @@ make
     *    @param [IN] condition  记录级别的过滤条件，仅当该条件满足时才会执行query操作，== ""则不作过滤。
     *    @param [OUT] vecArrayIndex 当返回的结果是局部数组时，且query指定TCAPLUS_PB_API_QUERY_RETURN_ARRAY_INDEX，这里返回局部数组的元素下标
     *    @retval TXHDB_ERR_RECORD_NOT_EXIST  记录不存在。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足。
     *    @retval <0   失败，返回对应的错误码。表示没有任何字段更新。
     *    @retval 0    成功。全部字段更新成功。
     */
@@ -772,14 +780,14 @@ make
     *    @param [IN] operation 对数组的操作表达式，即PUSH或SET或POP操作
     *    @param [IN] condition 过滤条件，仅当该条件满足时才会执行UpdateItem操作。
     *    @retval TXHDB_ERR_RECORD_NOT_EXIST  记录不存在。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足，没有任何字段更新。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足，没有任何字段更新。
     *    @retval <0   失败，返回对应的错误码。表示没有任何字段更新。
     *    @retval 0    成功。全部字段更新成功。
     */
     int UpdateItem(::google::protobuf::Message *msg, const std::string &operation, const std::string &condition = "");
 ```
 
-## 6.4 数组操作的 API（List 表）
+## 7.4 数组操作的 API（List 表）
 
 ```cpp
     /**
@@ -799,7 +807,7 @@ make
     *    @param [IN]  req 查询请求，包含msg、查询表达式、条件过滤表达式
     *    @param [OUT] res 返回操作结果
     *    @retval TXHDB_ERR_RECORD_NOT_EXIST  记录不存在。
-    *    @retval COMMON_ERR_EXPR_CONDITION_NOT_MATCHED  condition不满足。
+    *    @retval COMMON_ERR_CONDITION_NOT_MATCHED  condition不满足。
     *    @retval <0   失败，返回对应的错误码。表示没有任何字段更新。
     *    @retval 0    成功。全部字段更新成功。
     */
