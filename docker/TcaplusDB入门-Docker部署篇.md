@@ -107,7 +107,7 @@ tcaplusdb-local             3.51.1              e40b1d2157a9        3 days ago  
 docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="cvm外网ip" -e TCAPLUS_CONTAINER_OMS_PASSWORD="***" -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --name [容器名] [镜像REPOSITORY名]:[TAG]
 
 #示例,CVM外网IP为：106.54.12.135，客户自行替换成自己的IP
-docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="106.54.12.135"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="106.54.12.135"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --name test tcaplusdb-local:3.51.1
 ```
 
 ### 场景 2－容器创建
