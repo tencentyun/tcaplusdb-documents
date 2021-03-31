@@ -10,7 +10,7 @@ TcaplusDB 本地 Docker 版是为用户提供的一个满足本地开发调试�
 | 依赖组件              | 下载地址                                                                                                      |
 | --------------------- | ------------------------------------------------------------------------------------------------------------- |
 | TcaplusDB Docker 镜像 | [Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplusdb-local-3.51.1.tar.gz) |
-| TcaplusDB CLI 工具    | [Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/tcapluscli/tcapluscli.tgz)            |
+| TcaplusDB CLI 工具 (可选）    | [Download](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/tcapluscli/tcapluscli.tgz)            |
 
 # 部署前置
 
@@ -196,7 +196,33 @@ docker 容器暴露端口主要关注两类：
 - 一个是默认的`80`，用于 tcaplusdb web 访问 (OMS 管控平台）;
 - 另一个是后端服务端口：`9999和<13755-13780>`，用于 tcaplusdb 　 sdk 连接后端服务使用。需要确保本地开发测试机到 docker 部署机器的策略互通情况。13755-13780 主要是 tcaplusdb 的 proxy 端口，和表格组数量有关，默认一个表格组会创建两个端口，从 13755 开始递增。
 
+## TcaplusDB资源创建
+TcaplusDB提供了丰富的Web方式来管理TcaplusDB资源。在容器创建好后，会在部署机器暴露一个80端口，直接在浏览器打开IP即可访问web控制台。TcaplusDB资源涉及几块：
+* __TcaplusDB业务（aka.腾讯云TcaplusDB集群）__：默认会创建两个业务，一个TDR协议(app_id:2)，一个Protobuf协议(app_id:3)
+* __TcaplusDB游戏区 (aka.腾讯云TcaplusDB表格组)__: 默认每个业务下会创建一个游戏区，如TDR协议业务游戏区(zone_id:3), protobuf协议业务游戏区(zone_id:1)。
+* __TcaplusDB表（aka.腾讯云TcaplusDB表)__: 根据业务自定义表来创建表.
+
+### TcaplusDB业务准备
+默认容器中已经创建好业务（集群），此步用户可以跳过。
+### TcaplusDB游戏区准备
+默认容器业务已经创建好一个游戏区（表格组），如果不想用默认的，可选中对应的业务，添加游戏区：
+```
+step1. 点击菜单栏：业务维护，选中一个业务，如pb_app(3),点击：新增游戏区
+step2.在弹出的页面中，填写游戏区id(与现有保持区别), 选择游戏区分配集群（如：正式游戏区）
+step3. 点击提交即可,再回来业务页面，选中刚创建游戏区的业务，点击进入，可查看到最新创建的游戏区
+```
+### TcaplusDB表准备
+表创建需要提前准备好表定义文件，如果是TDR协议业务需要准备好.xml的文件，如果是Protobuf协议的业务需要准备好.proto文件(proto3)。
+```
+step1.点击菜单栏：业务管理＝〉表管理
+step2.选择业务，勾选对应的游戏区，点击tab处的：表添加＝〉批量新增表
+step3.在弹出的页面中，拖到底部，点击：从本地文件中添加，上传表定义文件
+step4.点击提交，会进行表创建事务流程，过程中如果表定义有问题会自动报错，用户根据报错进行修复再重新提交即可。
+```
+
+
 ## TcaplusDB 工具准备
+** 此工具可选择性准备，如果用户希望通过Web方式来操作TcaplusDB，可忽略此章节，直接参考上面TcaplusDB资源创建环节即可。**
 
 ### 部署环境
 
