@@ -116,7 +116,7 @@ docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP=
 
 ```
 #内网ip，网卡eth1或eth0所在ip, 如172.17.32.2，　参数TCAPLUS_CONTAINER_OMS_PASSWORD指定web平台登录密码
-docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="172.17.32.2"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="172.17.32.2"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --name test tcaplusdb-local:3.51.1
 ```
 
 ### 场景 3－容器创建
@@ -126,10 +126,10 @@ docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP=
 
 ```
 #不指定proxy ip，　参数TCAPLUS_CONTAINER_OMS_PASSWORD指定web平台登录密码
-docker run -itd --shm-size=3G --privileged   -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+docker run -itd --shm-size=3G --privileged   -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --name test tcaplusdb-local:3.51.1
 
 #指定proxy ip, 用于一些本机无法telnet容器IP端口的场景，如telnet 172.17.0.2 9999无法通，指定IP获取方式：win10下进wsl环境，CentOS7 distro，执行ifconfig获取的eth0 ip
-docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 fn--name test tcaplusdb-local:3.51.1
+docker run -itd --shm-size=3G --privileged -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2"  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  -p 80:80 -p 9999:9999 -p 13755-13765:13755-13765 --name test tcaplusdb-local:3.51.1
 ```
 
 ### 场景 4-host 模式创建容器
