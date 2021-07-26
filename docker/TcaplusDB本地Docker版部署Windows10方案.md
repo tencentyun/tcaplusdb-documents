@@ -15,7 +15,7 @@
 | Linux Kernel Update Package | 用于 WSL2 的 Linux 内核组件的更新包                                                      |
 | CentOS7 Distro              | Linux Kernel for WSL2, 跑 docker 服务的系统载体                                          |
 | Docker-Desktop              | Windows 上 docker 管理平台，结合 WSL2 管理镜像和容器                                     |
-| TcaplusDB 本地 Docker 镜像  | 用于部署 TcaplusDB, 最新版本: 3.51.1                                                     |
+| TcaplusDB 本地 Docker 镜像  | 用于部署 TcaplusDB, 最新版本: 3.53.1                                                     |
 
 ## 其它要求
 
@@ -28,7 +28,7 @@
 | Linux Kernel Update Package | [下载](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)                          |
 | CentOs7 Distro              | [下载](https://github.com/wsldl-pg/CentWSL/releases/download/7.0.1907.3/CentOS7.zip)                      |
 | Docker-Desktop              | [下载](https://hub.docker.com/editions/community/docker-ce-desktop-windows/)                              |
-| TcaplusDB 本地 Docker 版    | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplusdb-local-3.51.1.tar.gz) |
+| TcaplusDB 本地 Docker 版    | [下载](https://tcaplus-tool-1302668961.cos.ap-shanghai.myqcloud.com/docker/tcaplusdb-local-3.53.1.tar.gz) |
 
 # WSL2 部署
 
@@ -134,14 +134,14 @@ PS C:\Windows\system32> wsl -l -v
 
 ## 步骤 1，准备镜像
 
-参考资源准备阶段下载的镜像,名称: `tcaplusdb-local-3.51.1.tar.gz`
+参考资源准备阶段下载的镜像,名称: `tcaplusdb-local-3.53.1.tar.gz`
 
 ## 步骤 2，导入镜像
 
 确认当前 WSL2 的默认 Linux 是 CentOS7, 如果不是，参照上面**"CentOS7 Distro 部署"**。以管理员身份打开 PowerShell, 执行:
 
 ```
-docker load -i tcaplusdb-local-3.51.1.tar.gz
+docker load -i tcaplusdb-local-3.53.1.tar.gz
 ```
 
 导入完成后，查看镜像是否 ok:
@@ -149,7 +149,7 @@ docker load -i tcaplusdb-local-3.51.1.tar.gz
 ```
 PS C:\Windows\system32> docker images
 REPOSITORY        TAG       IMAGE ID       CREATED       SIZE
-tcaplusdb-local   3.51.1    d06cce065bc1   2 hours ago   6.95GB
+tcaplusdb-local   3.53.1    d06cce065bc1   2 hours ago   6.95GB
 ```
 
 ## 步骤 3，创建容器
@@ -160,14 +160,14 @@ tcaplusdb-local   3.51.1    d06cce065bc1   2 hours ago   6.95GB
 
 ```
 #参数TCAPLUS_CONTAINER_OMS_PASSWORD用于指定web平台登录密码，保证安全
-docker run -itd --privileged  -p 8080:80 -p 13755-13765:13755-13765 -p 9999:9999  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  ----shm-size=3G --name test tcaplusdb-local:3.51.1
+docker run -itd --privileged  -p 8080:80 -p 13755-13765:13755-13765 -p 9999:9999  -e TCAPLUS_CONTAINER_OMS_PASSWORD="***"  ----shm-size=3G --name test tcaplusdb-local:3.53.1
 ```
 
 - 另一种是指定 IP，用于一些本机无法访问 docker 容器内 IP 的场景，如在 win10 　 cmd 下 telnet 172.17.0.2 9999 无法通时可用此方式创建容器
 
 ```
 #TCAPLUS_CONTAINER_PROXY_PUBLIC_IP是指定proxy的ip, 获取方式：进CentOS7 distro环境，用ifconfig 获取eth0的ip,
-docker run -itd --privileged  -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2" -e TCAPLUS_CONTAINER_OMS_PASSWORD="***" -p 8080:80 -p 13755-13765:13755-13765 -p 9999:9999 --shm-size=3G --name test tcaplusdb-local:3.51.1
+docker run -itd --privileged  -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2" -e TCAPLUS_CONTAINER_OMS_PASSWORD="***" -p 8080:80 -p 13755-13765:13755-13765 -p 9999:9999 --shm-size=3G --name test tcaplusdb-local:3.53.1
 ```
 
 上述容器创建命令还将容器内的端口暴露到宿主机：
@@ -181,7 +181,7 @@ docker run -itd --privileged  -e TCAPLUS_CONTAINER_PROXY_PUBLIC_IP="192.168.53.2
 ```
 [root@ballenwen-PC4 e]# docker ps
 CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS        PORTS                                                        NAMES
-4a6ce2b1811c   tcaplusdb-local:3.51.1   "sh /data/tcaplus/tc…"   2 seconds ago   Up 1 second   0.0.0.0:13755-13765->13755-13765/tcp, 0.0.0.0:8080->80/tcp   test
+4a6ce2b1811c   tcaplusdb-local:3.53.1   "sh /data/tcaplus/tc…"   2 seconds ago   Up 1 second   0.0.0.0:13755-13765->13755-13765/tcp, 0.0.0.0:8080->80/tcp   test
 ```
 
 容器创建后，进入容器，等 20-60s，tcaplus 进程会自动启动，可以通过执行：
